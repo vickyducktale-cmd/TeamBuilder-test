@@ -17,35 +17,36 @@ const Marquee = ({ products }) => {
   const productChunks = chunkArray(products, 4); // 4 products per row/slide
 
   return (
-    <div className=" mt-20">
+    <div className=" mt-20 relative">
       <h1 className=" text-center text-secondary text-xl font-extrabold">
         You may also like
       </h1>
 
+      {/* Custom Arrows */}
+      <button
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full border border-gray-300 "
+        onClick={() => carouselRef.current?.prev()}
+      >
+        <LeftOutlined style={{ fontSize: 24 }} />
+      </button>
+
+      <button
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full border border-gray-300 shadow-md hover:scale-110 transition"
+        onClick={() => carouselRef.current?.next()}
+      >
+        <RightOutlined style={{ fontSize: 24 }} />
+      </button>
+
       <Carousel
         ref={carouselRef}
         dots={false}
-        arrows
+        arrows={false}
         infinite={true}
         className="relative mt-10 w-full"
       >
         {productChunks.map((chunk, index) => (
           <div key={index}>
             <div className="relative flex justify-center gap-5">
-              {/* Custom Arrows */}
-              <button
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full border border-gray-300 "
-                onClick={() => carouselRef.current?.prev()}
-              >
-                <LeftOutlined style={{ fontSize: 24 }} />
-              </button>
-
-              <button
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full border border-gray-300 shadow-md hover:scale-110 transition"
-                onClick={() => carouselRef.current?.next()}
-              >
-                <RightOutlined style={{ fontSize: 24 }} />
-              </button>
               {chunk.map((product) => (
                 <Products key={product._id} products={product} />
               ))}
